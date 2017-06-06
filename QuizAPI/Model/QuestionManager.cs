@@ -316,6 +316,15 @@ namespace QuizAPI.Model
             return numberOfGoodAnswers;
         }
 
+        public void AddAnswers(IEnumerable<Answer> answers, Question question)
+        {
+            foreach (var answer in answers)
+            {
+                answer.Question = question;
+                Context.Add(answer);
+            }
+        }
+
     }
 }
 
