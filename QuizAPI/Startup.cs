@@ -15,6 +15,8 @@ using QuizAPI.Model.Identity;
 using QuizAPI.Model;
 using QuizAPI.Services;
 using Swashbuckle.AspNetCore.Swagger;
+using AutoMapper;
+using QuizAPI.Mapping;
 
 namespace QuizAPI
 {
@@ -45,6 +47,8 @@ namespace QuizAPI
                             .AllowAnyHeader();
                     });
             });
+
+            services.AddSingleton<IMapper>(MapperConfig.Configure());
 
             services.AddDbContext<QuizDbContext>(options => options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=QuizAPI;Trusted_Connection=True;"));
 

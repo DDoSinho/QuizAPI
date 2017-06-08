@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using QuizAPI.Entities;
 using QuizAPI.Model.ViewModels;
 using QuizAPI.Services;
@@ -13,15 +14,18 @@ namespace QuizAPI.Controllers
     {
         private readonly IQuizService _quizService;
 
-        public QuizApiController(IQuizService quizService)
+        private readonly IMapper _mapper;
+
+        public QuizApiController(IQuizService quizService, IMapper mapper)
         {
             _quizService = quizService;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public IActionResult Quizs()
         {
-            return Ok(_quizService.GetQuizs().Select(s => new { s.QuizID, s.Name }));
+            return Ok(_mapper.Map<List<Dtos.Quiz>>(_quizService.GetQuizs()));
         }
 
         [HttpGet]
@@ -38,7 +42,7 @@ namespace QuizAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            return Ok(_quizService.GetQuestions(id).Select(s => new { s.QuestionId, s.Text }));
+            return Ok(_mapper.Map<List<Dtos.Question>>(_quizService.GetQuestions(id)));
         }
 
         [HttpGet]
@@ -49,7 +53,7 @@ namespace QuizAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            return Ok(_quizService.GetAnswers(id).Select(s => new { s.AnswerId, s.Text, s.IsGoodAnswer }));
+            return Ok(_mapper.Map<List<Dtos.Answer>>(_quizService.GetAnswers(id)));
         }
 
         [HttpPost]
@@ -57,7 +61,7 @@ namespace QuizAPI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                BadRequest(ModelState);
+                return BadRequest(ModelState);
             }
 
             _quizService.PostGivedAnswers(givenAnswers);
@@ -70,10 +74,11 @@ namespace QuizAPI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                BadRequest();
+                return BadRequest(ModelState);
             }
 
             _quizService.CreateNewSession(session);
+
             return Ok(new { sessionId = session.SessionId, quizId = session.QuizId, point = session.Point });
         }
 
@@ -82,7 +87,7 @@ namespace QuizAPI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                BadRequest(ModelState);
+                return BadRequest(ModelState);
             }
 
             _quizService.AddQuestion(viewModel);
