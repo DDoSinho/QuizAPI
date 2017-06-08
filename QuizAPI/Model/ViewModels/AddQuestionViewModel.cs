@@ -14,6 +14,6 @@ namespace QuizAPI.Model.ViewModels
 
         public Question Question { get; set; }
 
-        //public IEnumerable<Answer> Answers { get; set; }
+        public IEnumerable<Answer> Answers { get; set; }
     }
 }

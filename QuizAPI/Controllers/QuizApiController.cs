@@ -80,13 +80,13 @@ namespace QuizAPI.Controllers
         [HttpPost]
         public IActionResult AddQuestion([FromBody] AddQuestionViewModel viewModel)
         {
-            Console.WriteLine();
             if (!ModelState.IsValid)
             {
                 BadRequest(ModelState);
             }
 
             _quizService.AddQuestion(viewModel);
+            _quizService.AddAnswers(viewModel.Answers, viewModel.Question);
 
             return Ok();
         }

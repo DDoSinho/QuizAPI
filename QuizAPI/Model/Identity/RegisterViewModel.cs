@@ -23,8 +23,5 @@ namespace QuizAPI.Model.Identity
         [Display(Name = "ConfirmPassword")]
         [Compare("Password", ErrorMessage = "The password and confirmation do not match")]
         public string ConfirmPassword { get; set; }
-
-        [Display(Name = "Administrator")]
-        public bool Administrator { get; set; }
     }
 }

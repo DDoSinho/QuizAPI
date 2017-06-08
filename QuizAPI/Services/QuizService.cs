@@ -56,5 +56,11 @@ namespace QuizAPI.Services
         {
             return _questionManager.GetThemes();
         }
+
+
+        public void AddAnswers(IEnumerable<Answer> answers, Question question)
+        {
+            _questionManager.AddAnswers(answers, question);
+        }
     }
 }

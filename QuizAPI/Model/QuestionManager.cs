@@ -323,6 +323,7 @@ namespace QuizAPI.Model
                 answer.Question = question;
                 Context.Add(answer);
             }
+            Context.SaveChanges();
         }
 
     }

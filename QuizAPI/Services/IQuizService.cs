@@ -24,5 +24,7 @@ namespace QuizAPI.Services
         int GetNumberOfGoodAnswers(IEnumerable<GivenAnswer> givenAnswers);
 
         void AddQuestion(AddQuestionViewModel viewModel);
+
+        void AddAnswers(IEnumerable<Answer> answers, Question question);
     }
 }
